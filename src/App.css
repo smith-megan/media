@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
 body {
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -7,16 +10,17 @@ body {
   padding: 0;
 	display: grid;
 	grid-template-columns: .5fr 1.5fr .5fr;
+  height: 100vh;
 }
 .left {
-	background-color: green;
+	background-color: #2C3460;
 	width: 100%;
 }
 .middle {
-	background-color: red;
+  background-color: #1A1A1A;
 	width: 100%;
 }
 .right {
-	background-color: blue;
+	background-color: #2C3460;
 	width: 100%;
 }
