@@ -6,44 +6,51 @@ const path = require('path');
 const {MongoClient}=require('mongodb')
 
 const app = express();
-app.use(express.json());
+app.use(express.json())
 app.use(cors());
 
+const connectionString ="mongodb+srv://MSAPP:Vbn91HMsfle8e09v@firstcluster.qt7jk.gcp.mongodb.net/medience?retryWrites=true&w=majority"
 
-async function mango() {
+MongoClient.connect(connectionString, async function(err, client){
+  let db=client.db()
+  const results = await db.collection("posts").find().toArray()
+  console.log(results)
+  client.close()
+})
+// async function mango() {
 
-	const uri="mongodb+srv://MSAPP:Vbn91HMsfle8e09v@firstcluster.qt7jk.gcp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-	const client= new MongoClient(uri)
-	try{
-	await client.connect()
-  await createListing(client, {
-    name: "Shack",
-    summary: "it's a shack",
-    bedrooms: 1,
-    bathrooms: 5
-  })
-	// await listDatabases(client)
-		} catch (e){
-		console.log(e)
-	} finally {
-		await client.close()
-	}
-}
+// 	const uri="mongodb+srv://MSAPP:Vbn91HMsfle8e09v@firstcluster.qt7jk.gcp.mongodb.net/sample_airbnb?retryWrites=true&w=majority"
+// 	const client= new MongoClient(uri)
+// 	try{
+// 	await client.connect()
+//   await createListing(client, {
+//     name: "Shack",
+//     summary: "it's a shack",
+//     bedrooms: 1,
+//     bathrooms: 5
+//   })
+// 	// await listDatabases(client)
+// 		} catch (e){
+// 		console.log(e)
+// 	} finally {
+// 		await client.close()
+// 	}
+// }
 
-mango().catch(console.error)
+// mango().catch(console.error)
 
-async function listDatabases(client){
-	const databaseList=	client.db().admin().listDatabases()
-	console.log(databaseList)
-  databaseList.databases.forEach(db=> {
-    console.log(`- ${db.name}`)
-  })
-}
+// async function listDatabases(client){
+// 	const databaseList=	client.db().admin().listDatabases()
+// 	console.log(databaseList)
+//   databaseList.databases.forEach(db=> {
+//     console.log(`- ${db.name}`)
+//   })
+// }
 
-async function createListing(client, newListing) {
-const result = await client.db("sample_airbnb").collection("listingsAndReviews").insertOne(newListing)
-console.log('new listing created with following id'+result.insertedId)
-}
+// async function createListing(client, newListing) {
+// const result = await client.db("sample_airbnb").collection("listingsAndReviews").insertOne(newListing)
+// console.log('new listing created with following id'+result.insertedId)
+// }
 
 app.use(express.static(path.join(__dirname, '../build')));
 
